@@ -43,3 +43,47 @@ function playRound(playerSelection, computerSelection) {
     return "None";
 }
 
+function game() {
+    let playerPoints = 0;
+    let computerPoints = 0;
+    let winner;
+
+    for (let i = 0; i < 5; i++) {
+        computerSelection = getComputerChoice();
+
+        // Keep asking for user input until it's valid (rock, paper or scissors)
+        do {
+            playerSelection = prompt("Type your choice (Rock, Paper or Scissors)");
+            if (playerSelection == null) {
+                return;
+            }
+            playerSelection = playerSelection.trim().toLowerCase();
+        } while (playerSelection != "rock" &&  playerSelection != "paper" && playerSelection != "scissors");
+
+        winner = playRound(playerSelection, computerSelection);
+
+        console.log("Round " + (i+1) + ": Player - " + playerSelection + " vs Computer - " + computerSelection);
+        console.log(winner);
+
+        if (winner == "Player Wins!") {
+            playerPoints++;
+        } else if (winner == "Computer Wins!") {
+            computerPoints++;
+        } else {
+            playerPoints++;
+            computerPoints++;
+        }
+    }
+    
+    console.log("----- End of Tournament -----");
+    if (playerPoints > computerPoints) {
+        console.log("Player wins!");
+    } else if (playerPoints < computerPoints) {
+        console.log("Computer wins!");
+    } else {
+        console.log("Tie!");
+    }
+    console.log("Score: Player: " + playerPoints + ", Computer:" + computerPoints);
+}
+
+game();
