@@ -20,7 +20,7 @@ function playRound(playerSelection, computerSelection) {
             return "Player Wins!";
         }
     }
-    
+
     if (playerSelection == 'paper') {
         if (computerSelection == 'rock') {
             return "Player Wins!";
@@ -58,11 +58,11 @@ function game() {
                 return;
             }
             playerSelection = playerSelection.trim().toLowerCase();
-        } while (playerSelection != "rock" &&  playerSelection != "paper" && playerSelection != "scissors");
+        } while (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors");
 
         winner = playRound(playerSelection, computerSelection);
 
-        console.log("Round " + (i+1) + ": Player - " + playerSelection + " vs Computer - " + computerSelection);
+        console.log("Round " + (i + 1) + ": Player - " + playerSelection + " vs Computer - " + computerSelection);
         console.log(winner);
 
         if (winner == "Player Wins!") {
@@ -74,7 +74,7 @@ function game() {
             computerPoints++;
         }
     }
-    
+
     console.log("----- End of Tournament -----");
     if (playerPoints > computerPoints) {
         console.log("Player wins!");
@@ -86,4 +86,61 @@ function game() {
     console.log("Score: Player: " + playerPoints + ", Computer:" + computerPoints);
 }
 
-game();
+// game();
+
+// Second Implementation
+
+let playerPoints = 0;
+let computerPoints = 0;
+let gameRound = 0;
+
+function updateScore(winner) {
+    if (winner == "Player Wins!") {
+        playerPoints++;
+    } else if (winner == "Computer Wins!") {
+        computerPoints++;
+    } else {
+        playerPoints++;
+        computerPoints++;
+    }
+}
+
+function printEndGame() {
+    console.log("----- End of Tournament -----");
+    if (playerPoints > computerPoints) {
+        document.querySelector(".winner").textContent = "Player wins!";
+    } else if (playerPoints < computerPoints) {
+        document.querySelector(".winner").textContent = "Computer wins!";
+    } else {
+        document.querySelector(".winner").textContent = "Tie!";
+    }
+    document.querySelector(".result").textContent = "Score: Player: " +
+        playerPoints + ", Computer:" + computerPoints;
+}
+
+function game2() {
+    let buttons = document.querySelectorAll("button");
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            let playerSelection = button.textContent.toLowerCase();
+            let computerSelection = getComputerChoice();
+
+            let winner = playRound(playerSelection);
+            updateScore(winner);
+
+            gameRound++;
+
+            document.querySelector(".result").textContent = "Round " + gameRound +
+                ": Player - " + playerSelection + " vs Computer - " + computerSelection;
+            document.querySelector(".winner").textContent = winner;
+
+            if (gameRound == 5) {
+                printEndGame();
+                playerPoints = computerPoints = gameRound = 0;
+            }
+        })
+    })
+}
+
+game2();
